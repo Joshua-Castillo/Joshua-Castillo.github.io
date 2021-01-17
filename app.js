@@ -7,12 +7,11 @@ form.addEventListener('submit', async function(e){
     const searchTerm = form.elements.query.value;
     const searchTermText = document.createElement('H3');
     removePriorText();
-    // displayRow.appendChild(searchTermText);
     document.body.append(searchTermText);
         searchTermText.classList.add('mx-5');
         searchTermText.innerHTML="Results for "+ "'" +searchTerm+ "'";
         searchTermText.setAttribute("id", "textToRemove");
-    const res = await axios.get(`https://www.omdbapi.com/?s=${searchTerm}&?type=movie&apikey=10e873c6`);
+    const res = await axios.get(`http://www.omdbapi.com/?s=${searchTerm}&?type=movie&apikey=10e873c6`);
     console.log(res.data);
     removePrior();
 
@@ -32,7 +31,7 @@ class Candidate{
 
     async printCandidateCard(parentNode){
         
-        const res = await axios.get(`https://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
+        const res = await axios.get(`http://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
         console.log(res.data);
         if(res.data.Type === "movie"){
         const cardContainer = document.createElement('DIV');
@@ -59,7 +58,6 @@ class Candidate{
         cardContainer.appendChild(cardImage);
             cardImage.appendChild(img);
             cardImage.classList.add('p-0');
-            // cardImage.classList.add('py-4');
             cardImage.classList.add('g-0');
                 img.classList.add('card-img-top');
                 img.classList.add('img-fluid');
@@ -89,20 +87,7 @@ class Candidate{
                 }
 
             button.addEventListener('click', () => {
-                if(cardContainer.classList.contains("nominated")){
-                    // cardContainer.classList.remove("nominated")
-                    // button.classList.remove("btn-danger");
-                    // button.innerHTML = "nominate";
-                    // button.classList.add("btn-primary");
-                    // if(nominees.includes(this.getImdbId())){
-                    // console.log(title.src + "'s nomination removed");
-                    // nominees.splice(nominees.indexOf(this.getImdbId()),1);
-                    // if (hasFiveNominees(nominees)) printBanner();
-                    }
-            
-                    // nominees.filter((item, index) => array.indexOf(item)===index);
-
-                 else if(nominees.length<5){
+                if(nominees.length<5){
                     cardContainer.classList.add("nominated");
                     button.innerHTML = "nominated"
                     button.classList.add("btn-danger");
@@ -113,34 +98,7 @@ class Candidate{
                     if(hasFiveNominees()) printBanner();
                     }
                     console.log("This works")
-                    
-                   
 
-                    // if(cardContainer.classList.contains("nominated")){
-                    //     cardContainer.classList.remove("nominated")
-                    //     button.classList.remove("btn-danger");
-                    //     button.innerHTML = "nominate";
-                    //     button.classList.add("btn-primary");
-                    //     if(nominees.includes(this.getImdbId())){
-                    //     console.log(title.src + "'s nomination removed");
-                    //     nominees.splice(nominees.indexOf(this.getImdbId()),1);
-                    //     if (hasFiveNominees(nominees)) printBanner();
-    
-                    //     }
-                
-                    //     // nominees.filter((item, index) => array.indexOf(item)===index);
-    
-                    // } else {
-                    //     cardContainer.classList.add("nominated");
-                    //     button.innerHTML = "nominated"
-                    //     button.classList.add("btn-danger");
-                    //     button.classList.remove("btn-primary");
-                    //     console.log(title.src + " nominated")
-                    //     if(nominees.length<6) nominees.push(this.getImdbId());
-                    //     if(hasFiveNominees()) printBanner();
-                    //     }
-                    //     printNominees();
-                    //     // nominees.filter((item, index) => nominees.indexOf(item)===index);
             })
         }
     }
@@ -162,7 +120,6 @@ const listCandidates = (Search) => {
     cardGroup.classList.add('p-5');
     cardGroup.classList.add('pg-white');
     cardGroup.classList.add('rounded');
-    // cardGroup.classList.add('col');
 
     const firstBatch = document.createElement('DIV');
     const secondBatch = document.createElement('DIV');
@@ -208,7 +165,7 @@ class Nominee{
 
     async printNomineeCard(parentNode){
         
-        const res = await axios.get(`https://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
+        const res = await axios.get(`http://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
         console.log(res.data);
 
         const cardContainer = document.createElement('DIV');
@@ -225,7 +182,6 @@ class Nominee{
         year.src = res.data.Year;
         parentNode.appendChild(cardContainer);
         cardContainer.classList.add('card');
-        // cardContainer.classList.add('max-height');        
         cardContainer.classList.add('container');
         cardContainer.classList.add('nomineeList');
         cardContainer.classList.add('text-center');
@@ -240,13 +196,10 @@ class Nominee{
             cardImage.appendChild(img);
             cardImage.classList.add('px-0');
             cardImage.classList.add('max-height');
-            // cardImage.classList.add('py-4');
             cardImage.classList.add('g-0');
                 img.classList.add('card-img-top');
                 img.classList.add('img-fluid');
-                img.classList.add('rounded');
-                // img.classList.add('max-height');
-             
+                img.classList.add('rounded');             
 
 
         cardContainer.appendChild(cardBody);
@@ -263,19 +216,13 @@ class Nominee{
             button.classList.add('btn-danger');
             button.classList.add('btn-block');
             button.classList.add('mb-5');
-            // button.classList.add('d-flex')
             button.innerHTML="remove";
 
             button.addEventListener('click', () => {
-                // if(cardContainer.classList.contains("nominaee")){
-                //     cardContainer.classList.remove("nominated")
-                //     button.classList.remove("btn-danger");
-                //     button.innerHTML = "nominate";
-                //     button.classList.add("btn-primary");
+                
                     console.log(title.src + "'s nomination removed");
                     if(this.getImdbId()){
                         nominees.splice(nominees.indexOf(this.getImdbId()),1);
-                        // if(candidate.getImdbId(this.getImdbId())){
                             cardContainer.classList.remove("nominated")
                             button.classList.remove("btn-danger");
                             button.innerHTML = "nominate";
@@ -284,12 +231,9 @@ class Nominee{
                             printNominees();
                             if(hasFiveNominees(nominees)) printBanner();
 
-
-                        // }
                     }
                     
-                    // nominees.filter((item, index) => array.indexOf(item)===index);
-                    // nominees.filter((item, index) => nominees.indexOf(item)===index);
+                    
             })
     }
 }
@@ -322,8 +266,6 @@ const printNominees = () => {
     cardGroup.classList.add('rounded');
     cardGroup.classList.add('gap-3');
     
-    // fillPlaceholder(5);
-    // cardGroup.classList.add('col');
 
     for(let [i, each] of nominees.entries()){
         
@@ -348,19 +290,4 @@ const removePriorText = () => {
 function hasFiveNominees(){if(nominees.length<5 || nominees.length>5)  return false; else return true;};
 
 function printBanner(){alert("You have 5 nominees!")};
-
-
-// const placeholderCards = new Array(0);
-
-// function fillPlaceholder(amount, parent){
-//     for(let i=0; i<amount; i++){
-//         const nom = document.createElement('H2');
-//         parent.appendChild(nom);
-//         // nom.innerHTML=i+"st nominee";
-//         nom.classList.add('card');
-//     }
-// }
-// function removePlaceholder(){
-//     placeholderCards.pop();
-// }
 
