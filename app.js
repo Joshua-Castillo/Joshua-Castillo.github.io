@@ -12,9 +12,7 @@ form.addEventListener('submit', async function(e){
         searchTermText.innerHTML="Results for "+ "'" +searchTerm+ "'";
         searchTermText.setAttribute("id", "textToRemove");
     const res = await axios.get(`http://www.omdbapi.com/?s=${searchTerm}&?type=movie&apikey=10e873c6`);
-    console.log(res.data);
     removePrior();
-
     listCandidates(res.data.Search);
 
 });
@@ -138,14 +136,18 @@ const listCandidates = (Search) => {
         secondBatch.classList.add('mx-auto');
         secondBatch.classList.add('py-2');
         
+    try{
 
-
-    for(let [i, result] of Search.entries()){
-        const candidate = new Candidate(result.imdbID);
-        if (i%2){
-            candidate.printCandidateCard(firstBatch); 
-        }
-        else candidate.printCandidateCard(secondBatch); 
+        for(let [i, result] of Search.entries()){
+            const candidate = new Candidate(result.imdbID);
+            if (i%2){
+                candidate.printCandidateCard(firstBatch); 
+            }
+            else candidate.printCandidateCard(secondBatch); 
+        } 
+    }catch (e){
+        console.error(e);
+        alert("Movie not found, please try another title.")
 
     }
     
@@ -182,23 +184,22 @@ class Nominee{
         year.src = res.data.Year;
         parentNode.appendChild(cardContainer);
         cardContainer.classList.add('card');
-        cardContainer.classList.add('container');
-        cardContainer.classList.add('nomineeList');
         cardContainer.classList.add('text-center');
         cardContainer.classList.add('rounded');
-        cardContainer.classList.add('px-0');
-        cardContainer.classList.add('h-25');
-        cardContainer.classList.add('w-25');
-
+        cardContainer.classList.add('border');
+        cardContainer.classList.add('border-danger');
+        cardContainer.classList.add('p-0');
 
 
         cardContainer.appendChild(cardImage);
             cardImage.appendChild(img);
-            cardImage.classList.add('px-0');
-            cardImage.classList.add('max-height');
+            cardImage.classList.add('p-0');
+            cardImage.classList.add('m-0');
+
             cardImage.classList.add('g-0');
                 img.classList.add('card-img-top');
                 img.classList.add('img-fluid');
+
                 img.classList.add('rounded');             
 
 
@@ -248,12 +249,15 @@ const printNominees = () => {
 
     const yourNomineesText = document.createElement('H3');
     const cardGroup = document.createElement('DIV');
+    const cardGroup2 = document.createElement('DIV');
+
 
     nomineeRow.appendChild(yourNomineesText);
     yourNomineesText.innerHTML = "Your Nominees";
     yourNomineesText.setAttribute("id", "removeYourNomineesText");
     yourNomineesText.classList.add('mx-5');
     yourNomineesText.classList.add('my-5');
+    // yourNomineesText.classList.add('p-0');
     
     nomineeRow.appendChild(cardGroup);        
     cardGroup.setAttribute("id", "nomineeList");
@@ -264,13 +268,21 @@ const printNominees = () => {
     cardGroup.classList.add('p-5');
     cardGroup.classList.add('pg-white');
     cardGroup.classList.add('rounded');
-    cardGroup.classList.add('gap-3');
-    
+    cardGroup.classList.add('card-group');
+
+    cardGroup.appendChild(cardGroup2);
+        cardGroup2.classList.add('row');
+        cardGroup2.classList.add('card-group');
+        cardGroup2.classList.add('gap-3');
+        cardGroup2.classList.add('mx-auto');
+        cardGroup2.classList.add('py-2');
+
+
 
     for(let [i, each] of nominees.entries()){
         
         const nominee = new Nominee(each);
-        nominee.printNomineeCard(cardGroup);
+        nominee.printNomineeCard(cardGroup2);
     }
 }
 
