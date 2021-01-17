@@ -12,7 +12,7 @@ form.addEventListener('submit', async function(e){
         searchTermText.classList.add('mx-5');
         searchTermText.innerHTML="Results for "+ "'" +searchTerm+ "'";
         searchTermText.setAttribute("id", "textToRemove");
-    const res = await axios.get(`http://www.omdbapi.com/?s=${searchTerm}&?type=movie&apikey=10e873c6`);
+    const res = await axios.get(`https://www.omdbapi.com/?s=${searchTerm}&?type=movie&apikey=10e873c6`);
     console.log(res.data);
     removePrior();
 
@@ -32,7 +32,7 @@ class Candidate{
 
     async printCandidateCard(parentNode){
         
-        const res = await axios.get(`http://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
+        const res = await axios.get(`https://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
         console.log(res.data);
         if(res.data.Type === "movie"){
         const cardContainer = document.createElement('DIV');
@@ -208,7 +208,7 @@ class Nominee{
 
     async printNomineeCard(parentNode){
         
-        const res = await axios.get(`http://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
+        const res = await axios.get(`https://www.omdbapi.com/?i=${this.imdbId}&apikey=10e873c6`);
         console.log(res.data);
 
         const cardContainer = document.createElement('DIV');
